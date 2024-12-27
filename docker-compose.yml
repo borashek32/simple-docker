@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  nginx:
+    container_name: server
+    image: nginx
+    # to add our config instead default
+    # to be sure
+    # go to server bash - docker compose exec <container name> bash
+    # cd etc
+    # cd nginx
+    # cd conf.d
+    # there will be our own configuration file for server
+    volumes:
+    - ./conf.d/:/etc/nginx/conf.d/
+    - ./:/var/www/
+    ports:
+    # port on my pc:remote port(do not change this one!!)
+    - "8080:80"
+  depends_on:
+    php
+
+  php:
+    image: php:8.4-fpm
+    volumes:
+    - ./conf.d/:/etc/nginx/conf.d/
+    - ./:/var/www/
